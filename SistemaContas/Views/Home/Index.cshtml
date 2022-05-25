@@ -1,0 +1,588 @@
+﻿@using System.Text.Json;
+@using System.Text.Json.Serialization;
+@using System.Globalization;
+@{
+    var user = ViewBag.User as IEnumerable<User>;
+    var note = user?.Select(x => x.Notes)?.ToList();
+    var note2 = user?.Select(x => x.Notes2)?.ToList();
+    var note3 = user?.Select(x => x.Notes3)?.ToList();
+    var porc = string.Empty;
+    decimal calc = 0;
+    decimal calc2 = 0;
+}
+<main>
+    <div class="container-fluid px-4">
+        <div class="row">
+            <div class="col-xl-2 col-md-3 mt-4 mb-2">
+                <div class="col-auto get" data-get="@ViewData["Id"]">
+                    <h1>Dashboard</h1>
+                </div>
+            </div>
+            <div class="col-xl-10 col-md-9 mt-4">
+                <div class="extra-info text-right">
+                    <a href="#" class="btn btn-secondary" data-toggle="modal" data-target="#modalid"><i class="fas fa-plus"></i> Adicionar </a>
+
+                    <a href="#" class="btn btn-secondary" data-toggle="modal" data-target="#ultimos-pedidos"><i class="fas fa-boxes"></i> Ultimos Pedidos </a>
+
+                    <a href="#" class="btn btn-secondary" data-toggle="modal" data-target="#lembrete"><i class="far fa-calendar-check"></i> Adicionar Lembrete</a>
+
+                    <small>Ultima vez logado: </small>
+                </div>
+            </div>
+        </div>
+
+        <!-- Content Row -->
+        <div class="row">
+
+            <!-- Earnings (Monthly) Card Example -->
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-primary shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                    Ganhos (Mensal)
+                                </div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                    $@(user?.Where(x => x.Earnings.Any(d => !string.IsNullOrEmpty(d.EarningDay)))?.FirstOrDefault()?.Earnings?.Where(x => x.Date.Month == DateTime.Today.Month)?.Select(x => double.Parse(x.EarningDay, new CultureInfo("pt-BR")))?.Sum().ToString("n2") ?? "0,00")
+
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Earnings (Monthly) Card Example -->
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-success shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                    Ganhos (Anual) em @DateTime.Today.ToString("yyyy")
+                                </div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">$@(user?.Where(x => x.Earnings.Any(d => !string.IsNullOrEmpty(d.EarningDay)))?.FirstOrDefault()?.Earnings?.Select(x => decimal.Parse(x.EarningDay, new CultureInfo("pt-BR"))).Sum().ToString("n2") ?? "0,00")</div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Earnings (Monthly) Card Example -->
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-info shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                                    Metas
+                                </div>
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col-auto">
+                                        <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800 porc"></div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="progress progress-sm mr-2">
+                                            <div class="progress-bar bg-info goal" role="progressbar"
+                                                 aria-valuenow="50" aria-valuemin="0"
+                                                 aria-valuemax="100"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pending Requests Card Example -->
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-warning shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                    Dividas / Contas
+                                </div>
+                                <div class="row">
+                                    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<div class="col-xl-1 col-md-1 h5 mb-0 font-weight-bold text-gray-800">@(user?.Where(x => x.Bills.Any(d => d.Status == Enums.pending))?.FirstOrDefault()?.Bills?.Where(x => x.Status == Enums.pending).Select(x => x.Status)?.Count().ToString() ?? "0")</div>
+                                    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<div class="col-xl-1 col-md-1 h5 mb-0 font-weight-bold text-gray-800">@(user?.Where(x => x.Debts.Any(d => d.Status == Enums.pending))?.FirstOrDefault()?.Debts?.Where(x => x.Status == Enums.pending).Select(x => x.Status)?.Count().ToString() ?? "0")</div>
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-comments fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xl-3 mb-4 metas">
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">Metas</h6>
+                    </div>
+                    <div class="card-body">
+                        @foreach (var item in user?.Select(x => x.Goal)?.FirstOrDefault()?.ToList() ?? Enumerable.Empty<Goal>())
+                        {
+                            <h4 class="small font-weight-bold">
+                                @item.Name <span class="float-right">@(porc = (double.Parse(item.ValueGoal ?? "0", new CultureInfo("pt-BR")) * 100 / double.Parse(item.Value ?? "0", new CultureInfo("pt-BR"))).ToString("n2") ?? "0,00")%</span>
+                            </h4>
+                            <div class="progress mb-4">
+                                <div class="progress-bar
+                             @if(double.Parse(item.ValueGoal ?? "0", new CultureInfo("pt-BR")) * 100 / double.Parse(item.Value ?? "0",new CultureInfo("pt-BR")) > 90)
+                             {
+                                 @Html.Raw("bg-success")
+                             }
+                             else if(double.Parse(item.ValueGoal ?? "0", new CultureInfo("pt-BR")) * 100 / double.Parse(item.Value ?? "0",new CultureInfo("pt-BR")) > 30)
+                             {
+                                  @Html.Raw("bg-warning")
+                             }
+                             else
+                             {
+                                 @Html.Raw("bg-danger")
+                             }
+                            " role="progressbar" style="width: @porc.Replace(',','.')%"
+                                 aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-7 mb-4">
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">Anotações</h6>
+                    </div>
+                    <div class="row p-2">
+                        <div class="col-xl-4 col-md-4 mb-3">
+                            <div class="card shadow mt-2">
+                                <div class="card-header bg-warning text-dark font-weight-bol">A Fazer</div>
+                                <div class="card-body bg-light" id="conteudo">
+                                    @if (note[0].Count() == 0)
+                                    {
+                                        <h5 class="card-title" id="titulo1">Titulo</h5>
+                                        <p class="card-text" id="anotacao1">Escreva algo aqui..</p>
+                                        <p class="d-none" id="id1">-1</p>
+                                    }
+                                    else
+                                    {
+                                        @foreach (var item in note)
+                                        {
+                                            foreach (var itens in item ?? Enumerable.Empty<Note>())
+                                            {
+                                                <h5 class="card-title" id="titulo1">@itens.Title</h5>
+                                                <p class="card-text" id="anotacao1">@itens.Content</p>
+                                                <p class="d-none" id="id1">@itens.Id</p>
+                                            }
+                                        }
+                                    }
+                                </div>
+                                <div class="card-footer bg-light"><summary class="w-50 mx-auto list-unstyled text-center" id="excluir1">Excluir</summary></div>
+                            </div>
+                        </div>
+                        <div class="col-xl-4 col-md-4 mb-3">
+                            <div class="card shadow mt-2">
+                                <div class="card-header bg-info text-dark font-weight-bol">Em Andamento</div>
+                                <div class="card-body bg-light">
+                                    @if ((note2[0]).Count() == 0)
+                                    {
+                                        <h5 class="card-title" id="titulo2">Titulo</h5>
+                                        <p class="card-text" id="anotacao2">Escreva algo aqui..</p>
+                                        <p class="d-none" id="id2">-1</p>
+                                    }
+                                    else
+                                    {
+                                        @foreach (var item in note2)
+                                        {
+                                            foreach (var itens in item ?? Enumerable.Empty<Note2>())
+                                            {
+                                                <h5 class="card-title" id="titulo2">@itens.Title</h5>
+                                                <p class="card-text" id="anotacao2">@itens.Content</p>
+                                                <p class="d-none" id="id2">@itens.Id</p>
+                                            }
+                                        }
+                                    }
+                                </div>
+                                <div class="card-footer bg-light"><summary class="w-50 mx-auto list-unstyled text-center" id="excluir2">Excluir</summary></div>
+                            </div>
+                        </div>
+                        <div class="col-xl-4 col-md-4 mb-3">
+                            <div class="card shadow mt-2">
+                                <div class="card-header bg-success text-dark font-weight-bol">Concluido</div>
+                                <div class="card-body bg-light">
+                                    @if (note3[0].Count() == 0)
+                                    {
+                                        <h5 class="card-title" id="titulo3">Titulo</h5>
+                                        <p class="card-text" id="anotacao3">Escreva algo aqui..</p>
+                                        <p class="d-none" id="id3">-1</p>
+
+                                    }
+                                    else
+                                    {
+                                        @foreach (var item in note3)
+                                        {
+                                            foreach (var itens in item ?? Enumerable.Empty<Note3>())
+                                            {
+                                                <h5 class="card-title" id="titulo3">@itens.Title</h5>
+                                                <p class="card-text" id="anotacao3">@itens.Content</p>
+                                                <p class="d-none" id="id3">@itens.Id</p>
+                                            }
+                                        }
+                                    }
+                                </div>
+                                <div class="card-footer bg-light"><summary class="w-50 mx-auto list-unstyled text-center" id="excluir3">Excluir</summary></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <aside class="col-xl-2 lembrete">
+                <div class="call">
+                    <h2>Lembretes</h2>
+                    @foreach (var item in user.Where(x => x.Bills.Any(d => d.FinalDate.Day == DateTime.Today.Day)))
+                    {
+                        <a href="" class="call-box" style="cursor: pointer;">
+                            <span class="call-user"><i class="fas fa-user"></i></span>
+                            <p class="mb-0">
+                                <strong>@item.Bills.FirstOrDefault().Name - </strong>
+                                <small>@item.Bills.FirstOrDefault().FinalDate.ToString("dd/MM/yyyy")</small>
+                            </p>
+                        </a>
+                    }
+                    @foreach (var item in user.Where(x => x.Debts.Any(d => d.DateExpired.Day == DateTime.Today.Day)).ToList())
+                    {
+                        <a href="" class="call-box" style="cursor: pointer;">
+                            <span class="call-user"><i class="fas fa-user"></i></span>
+                            <p class="mb-0">
+                                <strong>@item.Debts.Select(x => x.Name) - </strong>
+                                @*<small>@item.Debts.FirstOrDefault().DateExpired.ToString("dd/MM/yyyy") - @(item.Debts.FirstOrDefault().DateExpired.Day >= (DateTime.Today.Day - 3) ? "A vencer" : "")  @(item.Debts.FirstOrDefault().DateExpired.Day >= (DateTime.Today.Day + 3) ? "Vencida" : "") </small>*@
+                            </p>
+                        </a>
+                    }
+                </div>
+            </aside>
+        </div>
+
+
+        <div class="row">
+            <div class="col-xl-6">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <i class="fas fa-chart-area me-1"></i>
+                        Grafico anual
+                    </div>
+                    <div class="card-body shadow"><canvas id="myAreaChart" width="100%" height="40"></canvas></div>
+                </div>
+            </div>
+            <div class="col-xl-6">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <i class="fas fa-chart-bar me-1"></i>
+                        Grafico anual
+                    </div>
+                    <div class="card-body shadow"><canvas id="myBarChart" width="100%" height="40"></canvas></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <i class="fas fa-chart-area me-1"></i>
+                        Grafico diario
+                    </div>
+
+                    <div class="card-body" id="echart">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+
+            <!-- Content Column -->
+            <div class="col-lg-6 mb-4 shadow">
+
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <i class="fas fa-table me-1"></i>
+                        Dividas
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-striped tb" id="datatablesSimple">
+                            <thead class="text-center">
+                                <tr>
+                                    <th>Nome</th>
+                                    <th>Data Emprestimo</th>
+                                    <th>Data a Pagar</th>
+                                    <th>Valor</th>
+                                    <th>Status</th>
+                                    <th>Ações</th>
+
+                                </tr>
+                            </thead>
+                            <tbody style="cursor: pointer;">
+                                @foreach (var item in user?.Select(x => x.Bills).FirstOrDefault()?.ToList() ?? Enumerable.Empty<Bills>())
+                                {
+                                    calc2 += decimal.Parse(item?.Value ?? "0", new CultureInfo("pt-BR"));
+                                    <tr>
+                                        <td class="name">@item?.Name</td>
+                                        <td class="initialData">@item?.InitialDate.ToString("dd/MM/yyyy")</td>
+                                        <td class="finalData">@item?.FinalDate.ToString("dd/MM/yyyy")</td>
+                                        <td class="valor">R$ @item?.Value</td>
+                                        <td class="statusBills"><div class="@((item?.Status == Enums.pending) ? "badge bg-warning rounded-pill" : "badge bg-primary text-white rounded-pill")">@((item?.Status == Enums.pending) ? "Pendente" : "Pago")</div></td>
+                                        <td class="trashBills id" value="@item?.Id"><i class="fa-solid fa-trash"></i></td>
+                                    </tr>
+                                }
+                            </tbody>
+                            <tfoot>
+                                <tr class="bg-success text-white">
+                                    <th colspan="4">Total de dividas</th>
+                                    <th colspan="2" class="text-end">R$ @calc2.ToString("0,0.00", CultureInfo.InvariantCulture)</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 mb-4 shadow">
+
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <i class="fas fa-table me-1"></i>
+                        Contas a pagar
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-striped tb" id="datatablesSimple2">
+                            <thead class="text-center">
+                                <tr>
+                                    <th>Nome</th>
+                                    <th>Data a Vencer</th>
+                                    <th>Valor</th>
+                                    <th>Status</th>
+                                    <th>Ações</th>
+
+                                </tr>
+                            </thead>
+                            <tbody style="cursor: pointer;">
+                                @foreach (var item in user?.Select(x => x.Debts)?.FirstOrDefault()?.ToList() ?? Enumerable.Empty<Debts>())
+                                {
+                                    calc += decimal.Parse(item?.Value ?? "0", new CultureInfo("pt-BR"));
+                                    <tr>
+                                        <td class="name">@item?.Name</td>
+                                        <td class="data">@item?.DateExpired.ToString("dd/MM/yyyy")</td>
+                                        <td class="valor">R$ @item?.Value</td>
+                                        <td class="statusDebts"><div class="@((item?.Status == Enums.pending) ? "badge bg-warning rounded-pill" : "badge bg-primary text-white rounded-pill")">@((item?.Status == Enums.pending) ? "Pendente" : "Pago")</div></td>
+                                        <td class="trashDebts id" value="@item?.Id"><i class="fa-solid fa-trash"></i></td>
+                                    </tr>
+                                }
+
+                            </tbody>
+                            <tfoot>
+                                <tr class="bg-success text-white text-bold">
+                                    <th colspan="3">Total de contas</th>
+                                    <th colspan="2" class="text-end">R$ @calc.ToString("0,0.00", CultureInfo.InvariantCulture)</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Project Card Example -->
+        <!-- Modal -->
+        <div class="modal fade" id="modalid" tabindex="-1" role="dialog" aria-labelledby="TituloModalCentralizado" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="TituloModalCentralizado">Adicionar</h5>
+                        <button type="button" class="close fechar" data-dismiss="modal" aria-label="Fechar">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <select id="add">
+                            <option>Escolha uma opção</option>
+                            <option value="today">Ganhos de Hoje</option>
+                            <option value="bills">Dividas</option>
+                            <option value="debts">Contas</option>
+                            <option value="goals">Metas</option>
+                        </select>
+                        <div id="area"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary fechar" data-dismiss="modal">Fechar</button>
+                        <button type="button" class="btn btn-primary save">Salvar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="lembrete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Novo Lembrete</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                    <form action="@Url.Action("AdicionarLembrete", "Lembretes")" method="post">
+                        <div class="modal-body">
+
+
+                            <input type="hidden" name="cnpj" value="" />
+                            <div class="row">
+                                <div class="form-group col-12 col-md-6">
+                                    <label for="data">Data</label>
+                                    <input type="date" class="form-control" id="data" name="data">
+                                </div>
+
+                                <div class="form-group col-12 col-md-6">
+                                    <label for="hora">Horário</label>
+                                    <input type="time" class="form-control" id="hora" name="hora">
+                                </div>
+
+                                <div class="form-group col-12">
+                                    <label for="descricao">Descrição</label>
+                                    <textarea class="form-control" id="descricao" rows="3" name="descricao"></textarea>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="limparLembrete()">Cancelar</button>
+                            <button type="submit" class="btn btn-primary">Salvar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <template id="um">
+            <div class="form-group row mt-3">
+                <label for="nomedisso" class="col-sm-2 col-form-label">Nome</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="nomeDebito" placeholder="Nome">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="data" class="col-sm-4 col-form-label">Data pagamento</label>
+                <div class="col-sm-6">
+                    <input type="date" class="form-control" id="dataDebito" placeholder="Data">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="valor" class="col-sm-3">Valor R$:</label>
+                <div class="col-sm-6">
+                    <input type="text" required maxlength="15" class="form-control" id="valorDebito" placeholder="Valor" onkeypress="return(moeda(this,'.',',',event))">
+                </div>
+            </div>
+        </template>
+
+        <template id="dois">
+            <div class="form-group row mt-3">
+                <label for="nome" class="col-sm-2 col-form-label">Meta</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="nomeMeta" placeholder="Meta">
+                </div>
+            </div>
+
+            <div class="form-group row mt-3">
+                <label for="valor" class="col-sm-4 col-form-label">Valor Total R$:</label>
+                <div class="col-sm-6">
+                    <input type="text" required maxlength="15" class="form-control" id="valorMeta" placeholder="Valor" onkeypress="return(moeda(this,'.',',',event))">
+                </div>
+            </div>
+            <div class="form-group row mt-3">
+                <label for="valor" class="col-sm-4 col-form-label">Valor Possuido R$:</label>
+                <div class="col-sm-6">
+                    <input type="text" required maxlength="15" class="form-control" id="valorMetaTotal" placeholder="Valor" onkeypress="return(moeda(this,'.',',',event))">
+                </div>
+            </div>
+        </template>
+
+        <template id="tres">
+            <div class="form-group row mt-3">
+                <label for="data" class="col-sm-4 col-form-label">Data de hoje</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="dataGanhos" placeholder="Data" value="@DateTime.Today.ToString("yyyy/MM/dd")" onkeyup="verificarData()">
+                </div>
+                <div class="col-sm-6 d-none">
+                    <input type="date" class="form-control" id="dataGanhosDate" placeholder="Data">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="valor" class="col-sm-3">Valor R$:</label>
+                <div class="col-sm-6">
+                    <input type="text" required maxlength="15" class="form-control" id="valorGanhos" placeholder="Valor" onkeypress="return(moeda(this,'.',',',event))">
+                </div>
+            </div>
+        </template>
+
+        <template id="quatro">
+            <div class="form-group row mt-3">
+                <label for="nomedisso" class="col-sm-2 col-form-label">Nome</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="nomeBills" placeholder="Nome">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="data" class="col-sm-4 col-form-label">Data Emprestimo</label>
+                <div class="col-sm-6">
+                    <input type="date" class="form-control" id="dataInitial" placeholder="Data">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="data" class="col-sm-4 col-form-label">Data Pagamento</label>
+                <div class="col-sm-6">
+                    <input type="date" class="form-control" id="dataFinal" placeholder="Data">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="valor" class="col-sm-3">Valor R$:</label>
+                <div class="col-sm-6">
+                    <input type="text" required maxlength="15" class="form-control" id="valorBills" placeholder="Valor" onkeypress="return(moeda(this,'.',',',event))">
+                </div>
+            </div>
+        </template>
+
+    </div>
+
+</main>
+
+@section scripts {
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@5.3.2/dist/echarts.min.js"></script>
+<script type="text/javascript" src="~/js/datatables-demo.js"></script>,
+<script type="text/javascript" src="~/js/scripts.js"></script>
+<script type="text/javascript" src="~/js/notes.js"></script>
+<script type="text/javascript" src="~/js/tables.js"></script>
+<script type="text/javascript" src="~/js/echarts.js"></script>
+
+}
