@@ -12486,6 +12486,9 @@ p {
     border-color: #6c757d;
 }
 
+.call-user {
+    margin-right: 10px;
+}
 .btn {
     display: inline-block;
     font-weight: 400;

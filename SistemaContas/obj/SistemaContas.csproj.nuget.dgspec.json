@@ -1,23 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\luan.santos\\Desktop\\Projetos e anotações\\MyFinances-main\\SistemaContas\\SistemaContas.csproj": {}
+    "C:\\Users\\luan.santos\\Desktop\\Projetos e anotações\\My-Finances\\SistemaContas\\SistemaContas.csproj": {}
   },
   "projects": {
-    "C:\\Users\\luan.santos\\Desktop\\Projetos e anotações\\MyFinances-main\\SistemaContas\\SistemaContas.csproj": {
+    "C:\\Users\\luan.santos\\Desktop\\Projetos e anotações\\My-Finances\\SistemaContas\\SistemaContas.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\luan.santos\\Desktop\\Projetos e anotações\\MyFinances-main\\SistemaContas\\SistemaContas.csproj",
+        "projectUniqueName": "C:\\Users\\luan.santos\\Desktop\\Projetos e anotações\\My-Finances\\SistemaContas\\SistemaContas.csproj",
         "projectName": "SistemaContas",
-        "projectPath": "C:\\Users\\luan.santos\\Desktop\\Projetos e anotações\\MyFinances-main\\SistemaContas\\SistemaContas.csproj",
+        "projectPath": "C:\\Users\\luan.santos\\Desktop\\Projetos e anotações\\My-Finances\\SistemaContas\\SistemaContas.csproj",
         "packagesPath": "C:\\Users\\luan.santos\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\luan.santos\\Desktop\\Projetos e anotações\\MyFinances-main\\SistemaContas\\obj\\",
+        "outputPath": "C:\\Users\\luan.santos\\Desktop\\Projetos e anotações\\My-Finances\\SistemaContas\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
           "C:\\Users\\luan.santos\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -88,7 +89,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.202\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.300\\RuntimeIdentifierGraph.json"
         }
       }
     }

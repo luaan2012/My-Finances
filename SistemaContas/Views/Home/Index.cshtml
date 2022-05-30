@@ -198,7 +198,7 @@
                             <div class="card shadow mt-2">
                                 <div class="card-header bg-info text-dark font-weight-bol">Em Andamento</div>
                                 <div class="card-body bg-light">
-                                    @if ((note2[0]).Count() == 0)
+                                    @if (note2[0].Count() == 0)
                                     {
                                         <h5 class="card-title" id="titulo2">Titulo</h5>
                                         <p class="card-text" id="anotacao2">Escreva algo aqui..</p>
@@ -254,25 +254,25 @@
             <aside class="col-xl-2 lembrete">
                 <div class="call">
                     <h2>Lembretes</h2>
-                    @foreach (var item in user.Where(x => x.Bills.Any(d => d.FinalDate.Day == DateTime.Today.Day)))
+                    @foreach (var item in user ?? Enumerable.Empty<User>())
                     {
-                        <a href="" class="call-box" style="cursor: pointer;">
-                            <span class="call-user"><i class="fas fa-user"></i></span>
-                            <p class="mb-0">
-                                <strong>@item.Bills.FirstOrDefault().Name - </strong>
-                                <small>@item.Bills.FirstOrDefault().FinalDate.ToString("dd/MM/yyyy")</small>
-                            </p>
-                        </a>
-                    }
-                    @foreach (var item in user.Where(x => x.Debts.Any(d => d.DateExpired.Day == DateTime.Today.Day)).ToList())
-                    {
-                        <a href="" class="call-box" style="cursor: pointer;">
-                            <span class="call-user"><i class="fas fa-user"></i></span>
-                            <p class="mb-0">
-                                <strong>@item.Debts.Select(x => x.Name) - </strong>
-                                @*<small>@item.Debts.FirstOrDefault().DateExpired.ToString("dd/MM/yyyy") - @(item.Debts.FirstOrDefault().DateExpired.Day >= (DateTime.Today.Day - 3) ? "A vencer" : "")  @(item.Debts.FirstOrDefault().DateExpired.Day >= (DateTime.Today.Day + 3) ? "Vencida" : "") </small>*@
-                            </p>
-                        </a>
+                        foreach (var dados in item?.Bills?.Where(x => x.FinalDate.Month == DateTime.Today.Month && x.Status != Enums.pay && x.FinalDate.Day >= (DateTime.Today.Day - 3) && x.FinalDate.Day <= (DateTime.Today.Day + 3)) ?? Enumerable.Empty<Bills>())
+                        {
+                           <p class="mb-0">
+                                <span class="call-user"><i class="fas fa-user"></i></span>
+                                <strong>@dados.Name - </strong>
+                                <small>@dados.FinalDate.ToString("dd/MM/yyyy") - @(dados.FinalDate.Day <= (DateTime.Today.Day) ? @Html.Raw("<span ='text-warning'>A vencer</span>") : @Html.Raw("<span class='text-danger'>Vencida</span>"))</small>
+                            </p> 
+                        }
+
+                        foreach (var dados in item?.Debts?.Where(x => x.DateExpired.Month == DateTime.Today.Month && x.Status != Enums.pay && x.DateExpired.Day >= (DateTime.Today.Day - 3) && x.DateExpired.Day <= (DateTime.Today.Day + 3)) ?? Enumerable.Empty<Debts>())
+                        {
+                           <p class="mb-0">
+                                <span class="call-user"><i class="fas fa-user"></i></span>
+                                <strong>@dados.Name - </strong>
+                                <small>@dados.DateExpired.ToString("dd/MM/yyyy") - @(dados.DateExpired.Day <= (DateTime.Today.Day) ? @Html.Raw("<span class='text-warning'>A vencer</span>") : @Html.Raw("<spanclass='text-danger'>Vencida</span>"))</small>
+                            </p> 
+                        }
                     }
                 </div>
             </aside>
@@ -528,7 +528,7 @@
             <div class="form-group row mt-3">
                 <label for="data" class="col-sm-4 col-form-label">Data de hoje</label>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" id="dataGanhos" placeholder="Data" value="@DateTime.Today.ToString("yyyy/MM/dd")" onkeyup="verificarData()">
+                    <input type="text" class="form-control" id="dataGanhos" placeholder="Data" value="@DateTime.Today.ToString("dd/mm/yyyy")" onkeyup="verificarData()">
                 </div>
                 <div class="col-sm-6 d-none">
                     <input type="date" class="form-control" id="dataGanhosDate" placeholder="Data">
@@ -577,6 +577,7 @@
 
 @section scripts {
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@5.3.2/dist/echarts.min.js"></script>
 <script type="text/javascript" src="~/js/datatables-demo.js"></script>,

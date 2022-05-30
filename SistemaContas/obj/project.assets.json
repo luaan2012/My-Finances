@@ -4141,7 +4141,7 @@
       ]
     },
     "Microsoft.CSharp/4.5.0": {
-      "sha512": "EGoBmf3Na2ppbhPePDE9PlX81r1HuOZH5twBrq7couJZiPTjUnD3648balerQJO6EJ8Sj+43+XuRwQ7r+3tE3w==",
+      "sha512": "kaj6Wb4qoMuH3HySFJhxwQfe8R/sJsNJnANrvv8WdFPMoNbKY5htfNscv+LHCu5ipz+49m2e+WQXpLXr9XYemQ==",
       "type": "package",
       "path": "microsoft.csharp/4.5.0",
       "files": [
@@ -7571,7 +7571,7 @@
       ]
     },
     "System.Net.Http/4.3.0": {
-      "sha512": "Z1UfSF6dlpCdZdxh6LeoGlYH+q6ptG/iiIWgUUeKhE3DbQACmZkU7Sz2nOX0qdHjz72MOdYRbkSJ5Qwl6sZgvg==",
+      "sha512": "sYg+FtILtRQuYWSIAuNOELwVuVsxVyJGWQyOnlAzhV4xvhyFnON1bAzYYC+jjRW8JREM45R0R5Dgi8MTC5sEwA==",
       "type": "package",
       "path": "system.net.http/4.3.0",
       "files": [
@@ -10078,22 +10078,23 @@
   },
   "packageFolders": {
     "C:\\Users\\luan.santos\\.nuget\\packages\\": {},
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\luan.santos\\Desktop\\Projetos e anotações\\MyFinances-main\\SistemaContas\\SistemaContas.csproj",
+      "projectUniqueName": "C:\\Users\\luan.santos\\Desktop\\Projetos e anotações\\My-Finances\\SistemaContas\\SistemaContas.csproj",
       "projectName": "SistemaContas",
-      "projectPath": "C:\\Users\\luan.santos\\Desktop\\Projetos e anotações\\MyFinances-main\\SistemaContas\\SistemaContas.csproj",
+      "projectPath": "C:\\Users\\luan.santos\\Desktop\\Projetos e anotações\\My-Finances\\SistemaContas\\SistemaContas.csproj",
       "packagesPath": "C:\\Users\\luan.santos\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\luan.santos\\Desktop\\Projetos e anotações\\MyFinances-main\\SistemaContas\\obj\\",
+      "outputPath": "C:\\Users\\luan.santos\\Desktop\\Projetos e anotações\\My-Finances\\SistemaContas\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
         "C:\\Users\\luan.santos\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -10164,7 +10165,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.202\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.300\\RuntimeIdentifierGraph.json"
       }
     }
   }

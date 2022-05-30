@@ -344,20 +344,20 @@ namespace SistemaContas.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Echart(int id)
+        public IActionResult Echart(int id)
         {
 
-            var arr = await _service.Echart(id);
+            var arr = _service.Echart(id);
 
             return Json(new { Retorno = arr, message = "Success" });
 
         }
 
         [HttpGet]
-        public async Task<IActionResult> Chart(int id)
+        public IActionResult Chart(int id)
         {
 
-            var arr = await _service.Chart(id);
+            var arr = _service.Chart(id);
 
             return Json(new { Retorno = arr, message = "Success" });
 

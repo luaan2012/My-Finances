@@ -8,69 +8,69 @@ build_property.PlatformNeutralAssembly =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = SistemaContas
 build_property.RootNamespace = SistemaContas
-build_property.ProjectDir = C:\Users\luan.santos\Desktop\Projetos e anotações\MyFinances-main\SistemaContas\
+build_property.ProjectDir = C:\Users\luan.santos\Desktop\Projetos e anotações\My-Finances\SistemaContas\
 build_property.RazorLangVersion = 6.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = C:\Users\luan.santos\Desktop\Projetos e anotações\MyFinances-main\SistemaContas
+build_property.MSBuildProjectDirectory = C:\Users\luan.santos\Desktop\Projetos e anotações\My-Finances\SistemaContas
 build_property._RazorSourceGeneratorDebug = 
 
-[C:/Users/luan.santos/Desktop/Projetos e anotações/MyFinances-main/SistemaContas/Views/Autenticacao/Login.cshtml]
+[C:/Users/luan.santos/Desktop/Projetos e anotações/My-Finances/SistemaContas/Views/Autenticacao/Login.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXV0ZW50aWNhY2FvXExvZ2luLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/luan.santos/Desktop/Projetos e anotações/MyFinances-main/SistemaContas/Views/Autenticacao/Password.cshtml]
+[C:/Users/luan.santos/Desktop/Projetos e anotações/My-Finances/SistemaContas/Views/Autenticacao/Password.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXV0ZW50aWNhY2FvXFBhc3N3b3JkLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/luan.santos/Desktop/Projetos e anotações/MyFinances-main/SistemaContas/Views/Autenticacao/Register.cshtml]
+[C:/Users/luan.santos/Desktop/Projetos e anotações/My-Finances/SistemaContas/Views/Autenticacao/Register.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXV0ZW50aWNhY2FvXFJlZ2lzdGVyLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/luan.santos/Desktop/Projetos e anotações/MyFinances-main/SistemaContas/Views/Home/Index.cshtml]
+[C:/Users/luan.santos/Desktop/Projetos e anotações/My-Finances/SistemaContas/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/luan.santos/Desktop/Projetos e anotações/MyFinances-main/SistemaContas/Views/Home/Privacy.cshtml]
+[C:/Users/luan.santos/Desktop/Projetos e anotações/My-Finances/SistemaContas/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/luan.santos/Desktop/Projetos e anotações/MyFinances-main/SistemaContas/Views/Shared/Error/401.cshtml]
+[C:/Users/luan.santos/Desktop/Projetos e anotações/My-Finances/SistemaContas/Views/Shared/Error/401.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yXDQwMS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/luan.santos/Desktop/Projetos e anotações/MyFinances-main/SistemaContas/Views/Shared/Error/404.cshtml]
+[C:/Users/luan.santos/Desktop/Projetos e anotações/My-Finances/SistemaContas/Views/Shared/Error/404.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yXDQwNC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/luan.santos/Desktop/Projetos e anotações/MyFinances-main/SistemaContas/Views/Shared/Error/500.cshtml]
+[C:/Users/luan.santos/Desktop/Projetos e anotações/My-Finances/SistemaContas/Views/Shared/Error/500.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yXDUwMC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/luan.santos/Desktop/Projetos e anotações/MyFinances-main/SistemaContas/Views/Shared/Error/Error.cshtml]
+[C:/Users/luan.santos/Desktop/Projetos e anotações/My-Finances/SistemaContas/Views/Shared/Error/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/luan.santos/Desktop/Projetos e anotações/MyFinances-main/SistemaContas/Views/Shared/_grap.cshtml]
+[C:/Users/luan.santos/Desktop/Projetos e anotações/My-Finances/SistemaContas/Views/Shared/_grap.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9ncmFwLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/luan.santos/Desktop/Projetos e anotações/MyFinances-main/SistemaContas/Views/Shared/_Layout.cshtml]
+[C:/Users/luan.santos/Desktop/Projetos e anotações/My-Finances/SistemaContas/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/luan.santos/Desktop/Projetos e anotações/MyFinances-main/SistemaContas/Views/Shared/_ValidationScriptsPartial.cshtml]
+[C:/Users/luan.santos/Desktop/Projetos e anotações/My-Finances/SistemaContas/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/luan.santos/Desktop/Projetos e anotações/MyFinances-main/SistemaContas/Views/User/Index.cshtml]
+[C:/Users/luan.santos/Desktop/Projetos e anotações/My-Finances/SistemaContas/Views/User/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXNlclxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/luan.santos/Desktop/Projetos e anotações/MyFinances-main/SistemaContas/Views/_ViewImports.cshtml]
+[C:/Users/luan.santos/Desktop/Projetos e anotações/My-Finances/SistemaContas/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/luan.santos/Desktop/Projetos e anotações/MyFinances-main/SistemaContas/Views/_ViewStart.cshtml]
+[C:/Users/luan.santos/Desktop/Projetos e anotações/My-Finances/SistemaContas/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 

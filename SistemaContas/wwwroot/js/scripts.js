@@ -1,4 +1,5 @@
-﻿document.body.classList.toggle('sb-sidenav-toggled');
+﻿
+document.body.classList.toggle('sb-sidenav-toggled');
 
 window.addEventListener('DOMContentLoaded', event => {
 

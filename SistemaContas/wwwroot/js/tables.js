@@ -27,24 +27,25 @@
                     var finalDate;
                     var value;
                     var dateExpired;
+
                     if (content[0] == "name") {
                         name = newContainer;
                     } else if (content[0] == "initialData") {
-                        initialDate = newContainer ? newContainer : container;
+                        initialDate = newContainer ? moment(newContainer, 'DD/MM/YYYY').format('YYYY/MM/DD') : moment(container, 'DD/MM/YYYY').format('YYYY/MM/DD');
                     } else if (content[0] == "finalData") {
-                        finalDate = newContainer ? newContainer : container;
+                        finalDate = newContainer ? moment(newContainer, 'DD/MM/YYYY').format('YYYY/MM/DD') : moment(container, 'DD/MM/YYYY').format('YYYY/MM/DD');
                     } else if (content[0] == "valor") {
                         value = newContainer.replace("$", "").replace(" ", "").replace('R', '');
                     } else if (content[0] == "data") {
-                        dateExpired = newContainer ? newContainer : container;
+                        dateExpired = newContainer ? moment(newContainer, 'DD/MM/YYYY').format('YYYY/MM/DD') : moment(container, 'DD/MM/YYYY').format('YYYY/MM/DD');
                     }
-                    console.log(finalDate)
+                    console.log(finalDate, initialDate, dateExpired)
                     if (cond == "datatablesSimple") {
-                        $.post('/Home/UpdateTableBills', { Name: name, InitialDate: initialDate, FinalDate: finalDate, Value: value, Id: id }, function (data) {
+                        $.post('/Home/UpdateTableBills', { Name: name, InitialDate: initialDate, FinalDate: finalDate , Value: value, Id: id }, function (data) {
                             console.log(data)
                         })
                     } else {
-                        $.post('/Home/UpdateTableBills', { Name: name, DateExpired: dateExpired, Value: value, Id: id }, function (data) {
+                        $.post('/Home/UpdateTableDebts', { Name: name, DateExpired: dateExpired, Value: value, Id: id }, function (data) {
                             console.log(data)
                         })
                     }

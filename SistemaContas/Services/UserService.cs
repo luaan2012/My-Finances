@@ -408,7 +408,7 @@ namespace SistemaContas.Services
                         await _db.SaveChangesAsync();
 
                     }
-                    if(debts?.DateExpired != null)
+                    if(debts?.DateExpired.Year != 0001)
                     {
                         _db.Entry(debts).Property(x => x.DateExpired).IsModified = true;
                         await _db.SaveChangesAsync();
@@ -469,12 +469,18 @@ namespace SistemaContas.Services
             }
         }
 
-        public async Task<double[]> Echart(int id)
+        public List<double> Echart(int id)
         {
             try
             {
-                return await _db.Earning.Where(x => !string.IsNullOrEmpty(x.EarningDay) && x.UserId == id).OrderBy(x => x.Date.Day).Select(x => double.Parse((x.EarningDay ?? "0"), new CultureInfo("pt-BR"))).ToArrayAsync();
-               
+                var days = new List<double>();
+                for (int i = 1; i <= DateTime.Now.Day; i++)
+                {
+                    days.Add(_db.Earning.Where(x => !string.IsNullOrEmpty(x.EarningDay) && x.UserId == id && x.Date.Day == i).OrderBy(x => x.Date.Day).Select(x => double.Parse((x.EarningDay ?? "0"), new CultureInfo("pt-BR"))).ToList().Sum());
+                }
+                return days;
+
+
             }
             catch (Exception e)
             {
@@ -483,40 +489,18 @@ namespace SistemaContas.Services
             }
         }
 
-        public async Task<List<string>> Chart(int id)
+        public List<double> Chart(int id)
         {
             try
             {
-                List<string> month = new List<string>();
+                var month = new List<double>();
 
-                var jan = _db.Earning.Where(x => x.Date.Month == 01 && !string.IsNullOrEmpty(x.EarningDay) && x.UserId == id)?.Select(x => double.Parse(x.EarningDay ?? "0", new CultureInfo("pt-BR"))).ToList().Sum();
-                var fev = _db.Earning.Where(x => x.Date.Month == 02 && !string.IsNullOrEmpty(x.EarningDay) && x.UserId == id)?.Select(x => double.Parse(x.EarningDay ?? "0", new CultureInfo("pt-BR"))).ToList().Sum();
-                var mar = _db.Earning.Where(x => x.Date.Month == 03 && !string.IsNullOrEmpty(x.EarningDay) && x.UserId == id)?.Select(x => double.Parse(x.EarningDay ?? "0", new CultureInfo("pt-BR"))).ToList().Sum();
-                var abr = _db.Earning.Where(x => x.Date.Month == 04 && !string.IsNullOrEmpty(x.EarningDay) && x.UserId == id)?.Select(x => double.Parse(x.EarningDay ?? "0", new CultureInfo("pt-BR"))).ToList().Sum();
-                var may = _db.Earning.Where(x => x.Date.Month == 05 && !string.IsNullOrEmpty(x.EarningDay) && x.UserId == id)?.Select(x => double.Parse(x.EarningDay ?? "0", new CultureInfo("pt-BR"))).ToList().Sum();
-                var jun = _db.Earning.Where(x => x.Date.Month == 07 && !string.IsNullOrEmpty(x.EarningDay) && x.UserId == id)?.Select(x => double.Parse(x.EarningDay ?? "0", new CultureInfo("pt-BR"))).ToList().Sum();
-                var jul = _db.Earning.Where(x => x.Date.Month == 06 && !string.IsNullOrEmpty(x.EarningDay) && x.UserId == id)?.Select(x => double.Parse(x.EarningDay ?? "0", new CultureInfo("pt-BR"))).ToList().Sum();
-                var ago = _db.Earning.Where(x => x.Date.Month == 08 && !string.IsNullOrEmpty(x.EarningDay) && x.UserId == id)?.Select(x => double.Parse(x.EarningDay ?? "0", new CultureInfo("pt-BR"))).ToList().Sum();
-                var set = _db.Earning.Where(x => x.Date.Month == 09 && !string.IsNullOrEmpty(x.EarningDay) && x.UserId == id)?.Select(x => double.Parse(x.EarningDay ?? "0", new CultureInfo("pt-BR"))).ToList().Sum();
-                var outu = _db.Earning.Where(x => x.Date.Month == 10 && !string.IsNullOrEmpty(x.EarningDay) && x.UserId == id)?.Select(x => double.Parse(x.EarningDay ?? "0", new CultureInfo("pt-BR"))).ToList().Sum();
-                var nov = _db.Earning.Where(x => x.Date.Month == 11 && !string.IsNullOrEmpty(x.EarningDay) && x.UserId == id)?.Select(x => double.Parse(x.EarningDay ?? "0", new CultureInfo("pt-BR"))).ToList().Sum();
-                var dez = _db.Earning.Where(x => x.Date.Month == 12 && !string.IsNullOrEmpty(x.EarningDay) && x.UserId == id)?.Select(x => double.Parse(x.EarningDay ?? "0", new CultureInfo("pt-BR"))).ToList().Sum();
-
-                month.Add(jan.ToString() ?? "0,00");
-                month.Add(fev.ToString() ?? "0,00");
-                month.Add(mar.ToString() ?? "0,00");
-                month.Add(abr.ToString() ?? "0,00");
-                month.Add((may ?? 0).ToString().Replace(',','.') ?? "0,00");
-                month.Add(jun.ToString() ?? "0,00");
-                month.Add(jul.ToString() ?? "0,00");
-                month.Add(ago.ToString() ?? "0,00");
-                month.Add(set.ToString() ?? "0,00");
-                month.Add(outu.ToString() ?? "0,00");
-                month.Add(nov.ToString() ?? "0,00");
-                month.Add(dez.ToString() ?? "0,00");
-
+                for (int i = 1; i <= 12; i++)
+                {
+                    
+                    month.Add(_db.Earning.Where(x => x.Date.Month == i && !string.IsNullOrEmpty(x.EarningDay) && x.UserId == id).Select(x => double.Parse((x.EarningDay ?? "0,00"), new CultureInfo("pt-BR"))).ToList().Sum());
+                }
                 return month;
-
             }
             catch (Exception e)
             {
