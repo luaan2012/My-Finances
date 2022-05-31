@@ -22,11 +22,9 @@
                 <div class="extra-info text-right">
                     <a href="#" class="btn btn-secondary" data-toggle="modal" data-target="#modalid"><i class="fas fa-plus"></i> Adicionar </a>
 
-                    <a href="#" class="btn btn-secondary" data-toggle="modal" data-target="#ultimos-pedidos"><i class="fas fa-boxes"></i> Ultimos Pedidos </a>
-
                     <a href="#" class="btn btn-secondary" data-toggle="modal" data-target="#lembrete"><i class="far fa-calendar-check"></i> Adicionar Lembrete</a>
 
-                    <small>Ultima vez logado: </small>
+                    <small>Ultima vez logado: @user?.Select(x => x.LastDate).First()</small>
                 </div>
             </div>
         </div>

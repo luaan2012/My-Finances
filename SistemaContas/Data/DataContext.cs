@@ -14,8 +14,6 @@ namespace SistemaContas.Data
         public DbSet<Goal> Goal { get; set; }
         public DbSet<Bills> Bills { get; set; }
 
-
-
         public DataContext(DbContextOptions<DataContext> options)
         : base(options)
         {

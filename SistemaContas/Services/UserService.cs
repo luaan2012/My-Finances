@@ -28,7 +28,7 @@ namespace SistemaContas.Services
             catch (Exception e)
             {
 
-                throw new Exception("Not possible loading this content" + e);
+                throw new Exception("Not possible loading this content" + e.Message);
             }
         }
 
@@ -43,7 +43,7 @@ namespace SistemaContas.Services
             catch (Exception e)
             {
 
-                throw new Exception("Not possible loading this content" + e);
+                throw new Exception("Not possible loading this content" + e.Message);
             }
         }
 
@@ -61,7 +61,7 @@ namespace SistemaContas.Services
             catch (Exception e)
             {
 
-                throw new Exception("Not possible loading this content" + e);
+                throw new Exception("Not possible loading this content" + e.Message);
             }
         }
 
@@ -81,7 +81,7 @@ namespace SistemaContas.Services
             catch (Exception e)
             {
 
-                throw new Exception("Not possible loading this content" + e);
+                throw new Exception("Not possible loading this content" + e.Message);
             }
         }
 
@@ -100,8 +100,23 @@ namespace SistemaContas.Services
             catch (Exception e)
             {
 
-                throw new Exception("Not possible loading this content" + e);
+                throw new Exception("Not possible loading this content" + e.Message);
             }
+        }
+
+        public async Task SaveLastLogin(User user)
+        {
+            try
+            {
+                _db.Entry(user).Property(x => x.LastDate).IsModified = true;
+                await _db.SaveChangesAsync();
+            }
+            catch (Exception e)
+            {
+
+                throw new Exception("Error: " + e.Message);
+            }
+            
         }
 
         public async Task<User> GetByEmail(User user)
@@ -111,6 +126,8 @@ namespace SistemaContas.Services
                 var result = await _db.User.Where(x => x.Email == user.Email && x.Password == user.Password).FirstOrDefaultAsync();
                 if (result is not null)
                 {
+                    result.LastDate = DateTime.Now;
+                    await SaveLastLogin(result);
                     return result;
                 }
 
@@ -119,7 +136,7 @@ namespace SistemaContas.Services
             catch (Exception e)
             {
 
-                throw new Exception("Not possible loading this content" + e);
+                throw new Exception("Not possible loading this content" + e.Message);
             }
         }
 
@@ -133,7 +150,7 @@ namespace SistemaContas.Services
             catch (Exception e)
             {
 
-                throw new Exception("Not possible loading this content" + e);
+                throw new Exception("Not possible loading this content" + e.Message);
             }
         }
         
@@ -147,7 +164,7 @@ namespace SistemaContas.Services
             catch (Exception e)
             {
 
-                throw new Exception("Not possible loading this content" + e);
+                throw new Exception("Not possible loading this content" + e.Message);
             }
             
         }
@@ -171,7 +188,7 @@ namespace SistemaContas.Services
             catch (Exception e)
             {
 
-                throw new Exception("Not possible loading this content" + e);
+                throw new Exception("Not possible loading this content" + e.Message);
             }
         }
         public async Task SaveNote2(Note2 title)
@@ -198,7 +215,7 @@ namespace SistemaContas.Services
             catch (Exception e)
             {
 
-                throw new Exception("Not possible loading this content" + e);
+                throw new Exception("Not possible loading this content" + e.Message);
             }
         }
         public async Task SaveNote3(Note3 title)
@@ -221,7 +238,7 @@ namespace SistemaContas.Services
             catch (Exception e)
             {
 
-                throw new Exception("Not possible loading this content" + e);
+                throw new Exception("Not possible loading this content" + e.Message);
             }
         }
 
@@ -243,7 +260,7 @@ namespace SistemaContas.Services
             catch (Exception e)
             {
 
-                throw new Exception("Not possible loading this content" + e);
+                throw new Exception("Not possible loading this content" + e.Message);
             }
 
         }
@@ -287,7 +304,7 @@ namespace SistemaContas.Services
             catch (Exception e)
             {
 
-                throw new Exception("Not possible loading this content" + e);
+                throw new Exception("Not possible loading this content" + e.Message);
             }
 
         }
@@ -305,7 +322,7 @@ namespace SistemaContas.Services
             catch (Exception e)
             {
 
-                throw new Exception("Not possible loading this content" + e);
+                throw new Exception("Not possible loading this content" + e.Message);
             }
         }
 
@@ -322,7 +339,7 @@ namespace SistemaContas.Services
             catch (Exception e)
             {
 
-                throw new Exception("Not possible loading this content" + e);
+                throw new Exception("Not possible loading this content" + e.Message);
             }
         }
 
@@ -339,7 +356,7 @@ namespace SistemaContas.Services
             catch (Exception e)
             {
 
-                throw new Exception("Not possible loading this content" + e);
+                throw new Exception("Not possible loading this content" + e.Message);
             }
         }
         public async Task SaveEarnings(Earning earnings)
@@ -355,7 +372,7 @@ namespace SistemaContas.Services
             catch (Exception e)
             {
 
-                throw new Exception("Not possible loading this content" + e);
+                throw new Exception("Not possible loading this content" + e.Message);
             }
         }
 
@@ -373,7 +390,7 @@ namespace SistemaContas.Services
             catch (Exception e)
             {
 
-                throw new Exception("Not possible loading this content" + e);
+                throw new Exception("Not possible loading this content" + e.Message);
             }
         }
 
@@ -391,7 +408,7 @@ namespace SistemaContas.Services
             catch (Exception e)
             {
 
-                throw new Exception("Not possible loading this content" + e);
+                throw new Exception("Not possible loading this content" + e.Message);
             }
         }
 
@@ -425,7 +442,7 @@ namespace SistemaContas.Services
             catch (Exception e)
             {
 
-                throw new Exception("Not possible loading this content" + e);
+                throw new Exception("Not possible loading this content" + e.Message);
             }
         }
 
@@ -465,7 +482,7 @@ namespace SistemaContas.Services
             catch (Exception e)
             {
 
-                throw new Exception("Not possible loading this content" + e);
+                throw new Exception("Not possible loading this content" + e.Message);
             }
         }
 
@@ -485,7 +502,7 @@ namespace SistemaContas.Services
             catch (Exception e)
             {
 
-                throw new Exception("Not possible loading this content" + e);
+                throw new Exception("Not possible loading this content" + e.Message);
             }
         }
 
@@ -505,7 +522,7 @@ namespace SistemaContas.Services
             catch (Exception e)
             {
 
-                throw new Exception("Not possible loading this content" + e);
+                throw new Exception("Not possible loading this content" + e.Message);
             }
         }
 

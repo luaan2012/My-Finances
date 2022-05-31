@@ -17,7 +17,7 @@ namespace SistemaContas.Models
         public string? Email { get; set; }
         [Required(ErrorMessage = "Senha Obrigatório")]
         [StringLength(10, MinimumLength = 3, ErrorMessage = "Senha deve ter entre {2} entre {1} numeros.")]
-
+        public DateTime? LastDate { get; set; }
         public string? Password { get; set; }
         public IEnumerable<Bills>? Bills { get; set; }
         public IEnumerable<Debts>? Debts { get; set; }
