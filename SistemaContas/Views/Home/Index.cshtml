@@ -16,6 +16,8 @@
             <div class="col-xl-2 col-md-3 mt-4 mb-2">
                 <div class="col-auto get" data-get="@ViewData["Id"]">
                     <h1>Dashboard</h1>
+
+
                 </div>
             </div>
             <div class="col-xl-10 col-md-9 mt-4">
@@ -24,7 +26,7 @@
 
                     <a href="#" class="btn btn-secondary" data-toggle="modal" data-target="#lembrete"><i class="far fa-calendar-check"></i> Adicionar Lembrete</a>
 
-                    <small>Ultima vez logado: @user?.Select(x => x.LastDate).First()</small>
+                     <small>Ultima vez logado: @user?.First()?.Reminders?.Select(x => x.DateTime)?.Skip(user.First().Reminders.Select(x => x.DateTime).Count() - 2).First()</small>
                 </div>
             </div>
         </div>
@@ -129,22 +131,29 @@
         <div class="row">
             <div class="col-xl-3 mb-4 metas">
                 <div class="card shadow mb-4">
-                    <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Metas</h6>
+                    <div class="card-header py-3 d-flex justify-content-between">
+                        <div>
+                             <h6 class="m-0 font-weight-bold justify-content-end">Metas</h6>
+                        </div>
+                        <div>
+                           
+                           <a href="#" class="text-dark" data-toggle="modal" data-target="#modalMeta"><i class="fa-solid fa-plus" style="cursor: pointer;" id="metasAdd"></i></a>
+                        </div>
                     </div>
+
                     <div class="card-body">
                         @foreach (var item in user?.Select(x => x.Goal)?.FirstOrDefault()?.ToList() ?? Enumerable.Empty<Goal>())
                         {
-                            <h4 class="small font-weight-bold">
-                                @item.Name <span class="float-right">@(porc = (double.Parse(item.ValueGoal ?? "0", new CultureInfo("pt-BR")) * 100 / double.Parse(item.Value ?? "0", new CultureInfo("pt-BR"))).ToString("n2") ?? "0,00")%</span>
+                            <h4 class="small font-weight-bold trashGoal" data-atr='@item?.Id' onClick="trashGoal('@item?.Id')" style="cursor: pointer;">
+                                @item?.Name <span class="float-right">@(porc = (double.Parse(item?.ValueGoal ?? "0", new CultureInfo("pt-BR")) * 100 / double.Parse(item?.Value ?? "0", new CultureInfo("pt-BR"))).ToString("n2") ?? "0,00")%</span>
                             </h4>
-                            <div class="progress mb-4">
+                            <div class="progress mb-4 trashGoalDiv" data-atr='@item?.Id'> 
                                 <div class="progress-bar
-                             @if(double.Parse(item.ValueGoal ?? "0", new CultureInfo("pt-BR")) * 100 / double.Parse(item.Value ?? "0",new CultureInfo("pt-BR")) > 90)
+                             @if(double.Parse(item?.ValueGoal ?? "0", new CultureInfo("pt-BR")) * 100 / double.Parse(item?.Value ?? "0",new CultureInfo("pt-BR")) > 90)
                              {
                                  @Html.Raw("bg-success")
                              }
-                             else if(double.Parse(item.ValueGoal ?? "0", new CultureInfo("pt-BR")) * 100 / double.Parse(item.Value ?? "0",new CultureInfo("pt-BR")) > 30)
+                             else if(double.Parse(item?.ValueGoal ?? "0", new CultureInfo("pt-BR")) * 100 / double.Parse(item?.Value ?? "0",new CultureInfo("pt-BR")) > 30)
                              {
                                   @Html.Raw("bg-warning")
                              }
@@ -252,24 +261,45 @@
             <aside class="col-xl-2 lembrete">
                 <div class="call">
                     <h2>Lembretes</h2>
+
+                    @{
+                        var bills = user?.FirstOrDefault()?.Bills?.Where(x => x.FinalDate.Month == DateTime.Today.Month && x.Status != Enums.pay && x.FinalDate.Day >= (DateTime.Today.Day - 3) && x.FinalDate.Day <= (DateTime.Today.Day + 3)) ?? Enumerable.Empty<Bills>();
+                        var debts = user?.FirstOrDefault()?.Debts?.Where(x => x.DateExpired.Month == DateTime.Today.Month && x.Status != Enums.pay && x.DateExpired.Day >= (DateTime.Today.Day - 3) && x.DateExpired.Day <= (DateTime.Today.Day + 3)) ?? Enumerable.Empty<Debts>();
+                    }
                     @foreach (var item in user ?? Enumerable.Empty<User>())
                     {
-                        foreach (var dados in item?.Bills?.Where(x => x.FinalDate.Month == DateTime.Today.Month && x.Status != Enums.pay && x.FinalDate.Day >= (DateTime.Today.Day - 3) && x.FinalDate.Day <= (DateTime.Today.Day + 3)) ?? Enumerable.Empty<Bills>())
+                        if(bills.Count() > 0 || debts.Count() > 0)
                         {
-                           <p class="mb-0">
-                                <span class="call-user"><i class="fas fa-user"></i></span>
-                                <strong>@dados.Name - </strong>
-                                <small>@dados.FinalDate.ToString("dd/MM/yyyy") - @(dados.FinalDate.Day <= (DateTime.Today.Day) ? @Html.Raw("<span ='text-warning'>A vencer</span>") : @Html.Raw("<span class='text-danger'>Vencida</span>"))</small>
-                            </p> 
-                        }
+                            foreach (var dados in bills)
+                            {
+                               <p class="mb-0">
+                                    <span class="call-user"><i class="fas fa-user"></i></span>
+                                    <strong>@dados.Name - </strong>
+                                    <small>@dados.FinalDate.ToString("dd/MM/yyyy") - @(dados.FinalDate.Day <= (DateTime.Today.Day) ? @Html.Raw("<span ='text-warning'>A vencer</span>") : @Html.Raw("<span class='text-danger'>Vencida</span>"))</small>
+                                </p> 
+                            }
 
-                        foreach (var dados in item?.Debts?.Where(x => x.DateExpired.Month == DateTime.Today.Month && x.Status != Enums.pay && x.DateExpired.Day >= (DateTime.Today.Day - 3) && x.DateExpired.Day <= (DateTime.Today.Day + 3)) ?? Enumerable.Empty<Debts>())
+                            foreach (var dados in debts)
+                            {
+                               <p class="mb-0">
+                                    <span class="call-user"><i class="fas fa-user"></i></span>
+                                    <strong>@dados.Name - </strong>
+                                    <small>@dados.DateExpired.ToString("dd/MM/yyyy") - @(dados.DateExpired.Day <= (DateTime.Today.Day) ? @Html.Raw("<span class='text-warning'>A vencer</span>") : @Html.Raw("<span class='text-danger'>Vencida</span>"))</small>
+                                </p>
+                            }
+                        }
+                        else
                         {
-                           <p class="mb-0">
-                                <span class="call-user"><i class="fas fa-user"></i></span>
-                                <strong>@dados.Name - </strong>
-                                <small>@dados.DateExpired.ToString("dd/MM/yyyy") - @(dados.DateExpired.Day <= (DateTime.Today.Day) ? @Html.Raw("<span class='text-warning'>A vencer</span>") : @Html.Raw("<spanclass='text-danger'>Vencida</span>"))</small>
-                            </p> 
+                            <h6>Nenhuma notificação de divida encontrada</h6>
+                        }
+                        <hr />
+                        <h5>Lembretes fixos</h5>
+                        foreach(var dados in user?.FirstOrDefault()?.Remembers?.Where(x => x.DateTime.Year >= DateTime.Today.Year && x.DateTime.Month >= (DateTime.Today.Month - 1)) ?? Enumerable.Empty<Remember>())
+                        {
+                            <p class="mb-0" data-atr='@dados.Id' onClick="excluirNotificacao('@dados.Id')" style="cursor: pointer;">
+                                <span>@dados.Text - </span>
+                                <small>@dados.DateTime.ToString("dd/MM/yyyy") @dados.Hour - @((dados.DateTime.Day >= (DateTime.Today.Day) && dados.DateTime.Month == DateTime.Today.Month) ? @Html.Raw("<span class='text-warning'>Evento proximo</span>") : @Html.Raw("<span class='text-danger'>Evento vencido</span>"))</small>
+                            </p>
                         }
                     }
                 </div>
@@ -306,7 +336,7 @@
                         Grafico diario
                     </div>
 
-                    <div class="card-body" id="echart">
+                    <div class="card-body shadow" id="echart">
                     </div>
                 </div>
             </div>
@@ -435,6 +465,34 @@
             </div>
         </div>
 
+
+        <div class="modal fade" id="modalMeta" tabindex="-1" role="dialog" aria-labelledby="TituloModalCentralizado" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="TituloModalCentralizado">Incluir</h5>
+                        <button type="button" class="close fechar" data-dismiss="modal" aria-label="Fechar">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <select id="addMetas">
+                            <option>Escolha uma opção</option>
+                            @foreach (var item in user?.FirstOrDefault()?.Goal ?? Enumerable.Empty<Goal>())
+                            {
+                                <option value="@item.Id">@item.Name</option>
+                            }
+                        </select>
+                        <div id="areaAdicionando"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary fechar" data-dismiss="modal">Fechar</button>
+                        <button type="button" class="btn btn-primary saveIncluir">Salvar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="modal fade" id="lembrete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -445,7 +503,7 @@
                         </button>
                     </div>
 
-                    <form action="@Url.Action("AdicionarLembrete", "Lembretes")" method="post">
+                    <form action="@Url.Action("SaveRemenber", "Home")" method="post">
                         <div class="modal-body">
 
 
@@ -453,18 +511,19 @@
                             <div class="row">
                                 <div class="form-group col-12 col-md-6">
                                     <label for="data">Data</label>
-                                    <input type="date" class="form-control" id="data" name="data">
+                                    <input type="date" class="form-control" id="data" name="DateTime">
                                 </div>
 
                                 <div class="form-group col-12 col-md-6">
                                     <label for="hora">Horário</label>
-                                    <input type="time" class="form-control" id="hora" name="hora">
+                                    <input type="time" class="form-control" id="hora" name="Hour">
                                 </div>
 
                                 <div class="form-group col-12">
                                     <label for="descricao">Descrição</label>
-                                    <textarea class="form-control" id="descricao" rows="3" name="descricao"></textarea>
+                                    <textarea class="form-control" id="descricao" rows="3" name="Text"></textarea>
                                 </div>
+                                <input class="d-none" name="UserId" value="@ViewData["Id"]">
                             </div>
 
 
@@ -526,7 +585,7 @@
             <div class="form-group row mt-3">
                 <label for="data" class="col-sm-4 col-form-label">Data de hoje</label>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" id="dataGanhos" placeholder="Data" value="@DateTime.Today.ToString("dd/mm/yyyy")" onkeyup="verificarData()">
+                    <input type="text" class="form-control" id="dataGanhos" placeholder="Data" value="@DateTime.Today.ToString("dd/MM/yyyy")" onkeyup="verificarData()">
                 </div>
                 <div class="col-sm-6 d-none">
                     <input type="date" class="form-control" id="dataGanhosDate" placeholder="Data">
@@ -565,6 +624,21 @@
                 <label for="valor" class="col-sm-3">Valor R$:</label>
                 <div class="col-sm-6">
                     <input type="text" required maxlength="15" class="form-control" id="valorBills" placeholder="Valor" onkeypress="return(moeda(this,'.',',',event))">
+                </div>
+            </div>
+        </template>
+
+        <template id="cinco">
+            <div class="form-group row mt-3">
+                <label for="nomedisso" class="col-sm-2 col-form-label">Nome</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="nomeAdicionado">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="data" class="col-sm-4 col-form-label">Adicionar quantia</label>
+                <div class="col-sm-6">
+                    <input type="text" required maxlength="15" class="form-control" id="valorAdicionado" placeholder="Valor" onkeypress="return(moeda(this,'.',',',event))">
                 </div>
             </div>
         </template>

@@ -1,4 +1,9 @@
-﻿var id = $('.get').attr('data-get');
+﻿setTimeout(function () {
+    $("canvas[data-zr-dom-id='zr_0']").click();
+}, 400);
+
+
+var id = $('.get').attr('data-get');
 console.log(id)
 
 Date.prototype.diasNoCorrenteMes = function () {
@@ -228,7 +233,6 @@ $.get('/Home/Chart', { Id: id}, function (resultado) {
 });
 
 $.get('/Home/Chart', { Id: id}, function (resultado) {
-    console.log(resultado.retorno)
     // Set new default font family and font color to mimic Bootstrap's default styling
     Chart.defaults.global.defaultFontFamily = '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
     Chart.defaults.global.defaultFontColor = '#292b2c';

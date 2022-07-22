@@ -29,6 +29,7 @@ namespace SistemaContas.Controllers
         {
 
             var result = await _service.GetByEmail(user);
+
             if (result is not null)
             {
                 var claims = new List<Claim>();

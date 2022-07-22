@@ -7,6 +7,8 @@ using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
 using SistemaContas.Until;
 using System.Globalization;
+using System.Diagnostics;
+using System.Security.Claims;
 
 namespace SistemaContas.Services
 {
@@ -104,11 +106,12 @@ namespace SistemaContas.Services
             }
         }
 
-        public async Task SaveLastLogin(User user)
+        public async Task SaveLastLogin(int id)
         {
             try
             {
-                _db.Entry(user).Property(x => x.LastDate).IsModified = true;
+                var obj = new Reminder() { DateTime = DateTime.Now, UserId = id};
+                await _db.Reminders.AddAsync(obj);
                 await _db.SaveChangesAsync();
             }
             catch (Exception e)
@@ -126,8 +129,7 @@ namespace SistemaContas.Services
                 var result = await _db.User.Where(x => x.Email == user.Email && x.Password == user.Password).FirstOrDefaultAsync();
                 if (result is not null)
                 {
-                    result.LastDate = DateTime.Now;
-                    await SaveLastLogin(result);
+                    await SaveLastLogin(result.Id);
                     return result;
                 }
 
@@ -159,7 +161,7 @@ namespace SistemaContas.Services
             try
             {
                 return await _db.User.Where(x => x.Id == id).Include(n => n.Notes).Include(n => n.Notes2).Include(n => n.Notes3).Include(b => b.Bills).Include(d => d.Debts)
-                .Include(g => g.Goal).Include(e => e.Earnings).ToListAsync();
+                .Include(g => g.Goal).Include(e => e.Earnings).Include(f => f.Reminders).Include(o => o.Remembers).ToListAsync();
             }
             catch (Exception e)
             {
@@ -168,6 +170,89 @@ namespace SistemaContas.Services
             }
             
         }
+
+        public async Task SaveRemember(Remember remember)
+        {
+            try
+            {
+                if(remember.Text != null)
+                {
+                    await _db.Remembers.AddAsync(remember);
+                    await _db.SaveChangesAsync();
+                }
+            }
+            catch (Exception e)
+            {
+
+                throw new Exception("Not possible loading this content" + e.Message);
+            }
+
+        }
+
+        public async Task ChangeGoals(Goal goal)
+        {
+            try
+            {
+                var valor = _db?.Goal.Find(goal.Id);
+
+                if (valor is not null)
+                {
+                    var result = double.Parse(valor.ValueGoal ?? "0", new CultureInfo("pt-BR")) + double.Parse(goal.ValueGoal ?? "0", new CultureInfo("pt-BR"));
+                    valor.ValueGoal = result.ToString();
+                    _db?.Goal.Update(valor);
+                    await _db.SaveChangesAsync();
+                }
+            }
+            catch (Exception e)
+            {
+
+                throw new Exception("Not possible loading this content" + e.Message);
+            }
+
+        }
+        
+        public async Task DeleteRemember (int? id)
+        {
+            try
+            {
+                var obj = _db?.Remembers?.Find(id);
+
+                if(obj is not null)
+                {
+                    _db?.Remembers?.Remove(obj);
+                    await _db.SaveChangesAsync();
+                }
+
+            }
+            catch (Exception e)
+            {
+
+                throw new Exception("Not possible loading this content" + e.Message);
+            }
+
+        }
+
+        public async Task DeleteGoal(int? id)
+        {
+            try
+            {
+                var obj = _db?.Goal?.Find(id);
+
+                if (obj is not null)
+                {
+                    _db?.Goal?.Remove(obj);
+                    await _db.SaveChangesAsync();
+                }
+
+            }
+            catch (Exception e)
+            {
+
+                throw new Exception("Not possible loading this content" + e.Message);
+            }
+
+        }
+
         public async Task SaveNote(Note title)
         {
             try
@@ -493,7 +578,7 @@ namespace SistemaContas.Services
                 var days = new List<double>();
                 for (int i = 1; i <= DateTime.Now.Day; i++)
                 {
-                    days.Add(_db.Earning.Where(x => !string.IsNullOrEmpty(x.EarningDay) && x.UserId == id && x.Date.Day == i).OrderBy(x => x.Date.Day).Select(x => double.Parse((x.EarningDay ?? "0"), new CultureInfo("pt-BR"))).ToList().Sum());
+                    days.Add(_db.Earning.Where(x => !string.IsNullOrEmpty(x.EarningDay) && x.UserId == id && x.Date.Day == i && x.Date.Month == DateTime.Today.Month).OrderBy(x => x.Date.Day).Select(x => double.Parse((x.EarningDay ?? "0"), new CultureInfo("pt-BR"))).ToList().Sum());
                 }
                 return days;
 

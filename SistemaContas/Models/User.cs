@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SistemaContas.Models
 {
@@ -16,9 +17,17 @@ namespace SistemaContas.Models
         [DataType(DataType.EmailAddress)]
         public string? Email { get; set; }
         [Required(ErrorMessage = "Senha Obrigatório")]
-        [StringLength(10, MinimumLength = 3, ErrorMessage = "Senha deve ter entre {2} entre {1} numeros.")]
-        public DateTime? LastDate { get; set; }
+        [StringLength(10, MinimumLength = 6, ErrorMessage = "Senha deve ter entre {2} entre {1} numeros.")]
+        [DataType(DataType.Password)]
         public string? Password { get; set; }
+        [Required(ErrorMessage = "Confirmar senha Obrigatório")]
+        [StringLength(10, MinimumLength = 6, ErrorMessage = "Senha deve ter entre {2} entre {1} numeros.")]
+        [DataType(DataType.Password)]
+        [Compare("Password", ErrorMessage = "As senhas devem ser iguais")]
+        [NotMapped]
+        public string? ConfirmPassword{ get; set; }
+        public IEnumerable<Reminder>? Reminders { get; set; }
+        public IEnumerable<Remember>? Remembers { get; set; }
         public IEnumerable<Bills>? Bills { get; set; }
         public IEnumerable<Debts>? Debts { get; set; }
         public IEnumerable<Goal>? Goal { get; set; }

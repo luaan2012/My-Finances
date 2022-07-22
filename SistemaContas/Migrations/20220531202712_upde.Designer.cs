@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SistemaContas.Data;
 
@@ -10,9 +11,10 @@ using SistemaContas.Data;
 namespace SistemaContas.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20220531202712_upde")]
+    partial class upde
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.4");
@@ -192,32 +194,6 @@ namespace SistemaContas.Migrations
                     b.ToTable("Note3");
                 });
 
-            modelBuilder.Entity("SistemaContas.Models.Remember", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<DateTime>("DateTime")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Hour")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Text")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("UserId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Remembers");
-                });
-
             modelBuilder.Entity("SistemaContas.Models.Reminder", b =>
                 {
                     b.Property<int>("Id")
@@ -344,17 +320,6 @@ namespace SistemaContas.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("SistemaContas.Models.Remember", b =>
-                {
-                    b.HasOne("SistemaContas.Models.User", "User")
-                        .WithMany("Remembers")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("SistemaContas.Models.Reminder", b =>
                 {
                     b.HasOne("SistemaContas.Models.User", "User")
@@ -381,8 +346,6 @@ namespace SistemaContas.Migrations
                     b.Navigation("Notes2");
 
                     b.Navigation("Notes3");
-
-                    b.Navigation("Remembers");
 
                     b.Navigation("Reminders");
                 });

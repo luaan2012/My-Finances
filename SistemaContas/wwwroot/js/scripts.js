@@ -55,7 +55,6 @@ function moeda(a, e, r, t) {
 }
 
 $(document).ready(function () {
-
     
     var alt = $('.metas').height();
     $('.anotacoes').height(`${alt}` + 'px')
@@ -92,5 +91,22 @@ $(document).ready(function () {
 function limparLembrete() {
     $('#hora').val('');
     $('#data').val('');
+}
+
+function excluirNotificacao(id) {
+    if (window.confirm('Deseja excluir essa notificação?')) {
+        $.post('/Home/DeleteRemember', { Id: id }, function () {
+            $(`.mb-0[data-atr="${id}`).remove();
+        })
+    }
+}
+
+function trashGoal(id) {
+    if (window.confirm('Deseja excluir essa meta?')) {
+        $.post('/Home/DeleteGoal', { Id: id }, function () {
+            $(`.trashGoal[data-atr="${id}`).remove();
+            $(`.trashGoalDiv[data-atr="${id}`).remove(); 
+        })
+    }
 }
 

@@ -83,6 +83,7 @@ namespace SistemaContas.Controllers
                         var note = new Note3 { Id = int.Parse(id), Title = title, Content = content, UserId = int.Parse(HttpContext.User.Claims.Where(x => x.Type == ClaimTypes.Role).Select(x => x.Value).Last()) };
                         await _service.SaveNote3(note);
                     }
+
                 }
 
             }
@@ -130,6 +131,89 @@ namespace SistemaContas.Controllers
                 return Json(new { status = 0, message = "Failed " + e });
             }
             return Json(new { status = 1, message = "Success" });
+
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SaveRemenber(Remember remember)
+        {
+
+            if (remember.Text is null)
+            {
+                return Json(new { status = 0, message = "Failed" });
+            }
+
+            try
+            {
+                await _service.SaveRemember(remember);
+            }
+            catch (Exception e)
+            {
+                return Json(new { status = 0, message = "Failed" + e });
+            }
+            return RedirectToAction("Index", "Home");
+
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ChangeGoals(Goal goal)
+        {
+
+            if (goal.Name is null)
+            {
+                return Json(new { status = 0, message = "Failed" });
+            }
+
+            try
+            {
+                await _service.ChangeGoals(goal);
+            }
+            catch (Exception e)
+            {
+                return Json(new { status = 0, message = "Failed" + e });
+            }
+            return RedirectToAction("Index", "Home");
+
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteRemember(int id)
+        {
+
+            if (id < 0)
+            {
+                return Json(new { status = 0, message = "Failed" });
+            }
+
+            try
+            {
+                await _service.DeleteRemember(id);
+            }
+            catch (Exception e)
+            {
+                return Json(new { status = 0, message = "Failed" + e });
+            }
+            return RedirectToAction("Index", "Home");
+
+        }
+
+        public async Task<IActionResult> DeleteGoal(int id)
+        {
+
+            if (id < 0)
+            {
+                return Json(new { status = 0, message = "Failed" });
+            }
+
+            try
+            {
+                await _service.DeleteGoal(id);
+            }
+            catch (Exception e)
+            {
+                return Json(new { status = 0, message = "Failed" + e });
+            }
+            return RedirectToAction("Index", "Home");
 
         }
 

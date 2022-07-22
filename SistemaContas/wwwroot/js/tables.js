@@ -109,6 +109,33 @@
         }
     })
 
+    var verificarMeta = false;
+    $('#addMetas').change(function () {
+        if (!verificarMeta) {
+            var content = document.querySelector('#cinco').content;
+            document.querySelector('#areaAdicionando').appendChild(
+                document.importNode(content, true));
+            verificarMeta = true;
+        }
+        $('#nomeAdicionado').val($('#addMetas option:selected').html())
+    })
+
+    $('.saveIncluir').click(function () {
+        var id = $('#addMetas').val();
+        var name = $('#addMetas option:selected').html();
+        var value = $('#valorAdicionado').val();
+        var idUser = $('.get').attr('data-get');
+
+        $.post('/Home/ChangeGoals', { Name: name, Id: id, ValueGoal: value, UserId: idUser }, function (data, status) {
+            if (status == "success") {
+                alert("Salvo com sucesso");
+                $('#areaAdicionando').html('');
+                location.reload();
+            }
+        })
+        
+    })
+
     $('.trashBills').click(function () {
         var id = $(this).attr('value');
         let text = "Tem certeza que deseja excluir?";

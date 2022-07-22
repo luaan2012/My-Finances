@@ -52,14 +52,15 @@
                                                 <div class="col-md-6">
                                                     <div class="form-floating mb-3 mb-md-0">
                                                         <input asp-for="Password" class="form-control" id="inputpassword" type="password" placeholder="Create a password" />
-                                                        <label asp-for="Password"for="inputpassword">Senha</label>
+                                                        <label asp-for="Password" for="inputpassword">Senha</label>
                                                         <span asp-validation-for="Password" class="text-danger"></span>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-floating mb-3 mb-md-0">
-                                                        <input class="form-control" id="inputpasswordconfirm" type="password" placeholder="Confirm password" />
-                                                        <label for="inputpasswordconfirm">Confirmar senha</label>
+                                                        <input asp-for="ConfirmPassword" class="form-control" id="inputpasswordconfirm" type="password" placeholder="Confirm password" />
+                                                        <label asp-for="ConfirmPassword" for="inputpasswordconfirm">Confirmar senha</label>
+                                                        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
                                                     </div>
                                                 </div>
                                             </div>
