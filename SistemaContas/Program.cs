@@ -2,11 +2,12 @@
 using Microsoft.EntityFrameworkCore;
 using SistemaContas.Data;
 using SistemaContas.Services;
+using System.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<DataContext>(options => {
-    options.UseSqlite(builder.Configuration.GetConnectionString("DataContext"));
+    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection").Replace("{AppDir}", AppDomain.CurrentDomain.BaseDirectory));
 });
 
 builder.Services.AddDistributedMemoryCache();
