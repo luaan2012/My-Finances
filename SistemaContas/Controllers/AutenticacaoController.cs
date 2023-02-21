@@ -61,8 +61,10 @@ namespace SistemaContas.Controllers
         public async Task<IActionResult> Logoff()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+
+            HttpContext.Session.Clear();
             
-            return View(nameof(Login));
+            return RedirectToAction("Login");
         }
         public IActionResult Password()
         {

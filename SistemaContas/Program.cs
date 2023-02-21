@@ -7,7 +7,7 @@ using System.Configuration;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<DataContext>(options => {
-    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection").Replace("{AppDir}", AppDomain.CurrentDomain.BaseDirectory));
+    options.UseSqlite("DataSource=teste.db");
 });
 
 builder.Services.AddDistributedMemoryCache();
@@ -40,6 +40,12 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+using (var serviceScope = app.Services.GetService<IServiceScopeFactory>().CreateScope())
+{
+    var context = serviceScope.ServiceProvider.GetRequiredService<DataContext>();
+    context.Database.EnsureCreated();
+}
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
@@ -50,6 +56,8 @@ app.UseSession();
 app.UseAuthentication();
 
 app.UseAuthorization();
+
+app.UseRequestLocalization("pt-BR");
 
 app.MapControllerRoute(
     name: "default",

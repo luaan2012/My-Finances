@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "dB3McWsR+kvQXH3+NRhgxOoKOzFKI9FX8+7yQLpiSMOrCBu8Ulic+NlXKgQi9xF+2KG3d+xRUAuyfQ63dH2B3w==",
+  "dgSpecHash": "SF7P8/kPRA3fABzevUhgEsYQKmsIU+ycxTFHr2Jh4fQ0BoA4pvvsJ4JKZ7Z90N3NZKcwOJu2wq7VlEFOyjOrXg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Luan\\Documents\\Visual Studio 2022\\Projects\\My-Finances\\SistemaContas\\SistemaContas.csproj",
+  "projectFilePath": "C:\\Users\\Luan\\Documents\\Visual Studio 2022\\Projects\\My-Finances\\My-Finances\\SistemaContas\\SistemaContas.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Luan\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\Luan\\.nuget\\packages\\messagepack\\2.1.152\\messagepack.2.1.152.nupkg.sha512",
@@ -64,6 +64,7 @@
     "C:\\Users\\Luan\\.nuget\\packages\\microsoft.netcore.platforms\\3.1.0\\microsoft.netcore.platforms.3.1.0.nupkg.sha512",
     "C:\\Users\\Luan\\.nuget\\packages\\microsoft.netcore.targets\\1.1.3\\microsoft.netcore.targets.1.1.3.nupkg.sha512",
     "C:\\Users\\Luan\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",
+    "C:\\Users\\Luan\\.nuget\\packages\\microsoft.visualstudio.azure.containers.tools.targets\\1.17.0\\microsoft.visualstudio.azure.containers.tools.targets.1.17.0.nupkg.sha512",
     "C:\\Users\\Luan\\.nuget\\packages\\microsoft.visualstudio.debugger.contracts\\17.2.0\\microsoft.visualstudio.debugger.contracts.17.2.0.nupkg.sha512",
     "C:\\Users\\Luan\\.nuget\\packages\\microsoft.visualstudio.web.codegeneration\\6.0.3\\microsoft.visualstudio.web.codegeneration.6.0.3.nupkg.sha512",
     "C:\\Users\\Luan\\.nuget\\packages\\microsoft.visualstudio.web.codegeneration.core\\6.0.3\\microsoft.visualstudio.web.codegeneration.core.6.0.3.nupkg.sha512",

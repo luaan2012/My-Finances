@@ -66,7 +66,7 @@ $(document).ready(function () {
         cont++;
     })
     var total = soma / cont;
-    $('.porc').html(total.toFixed(2) + '%');
+    $('.porc').html((total > 0 ? total : 0).toFixed(2) + '%');
     $('.goal').css('width', soma / cont + '%')
 
     $('.fechar').on('click', function () {
@@ -106,6 +106,7 @@ function trashGoal(id) {
         $.post('/Home/DeleteGoal', { Id: id }, function () {
             $(`.trashGoal[data-atr="${id}`).remove();
             $(`.trashGoalDiv[data-atr="${id}`).remove(); 
+            window.location.reload()
         })
     }
 }
