@@ -7,7 +7,7 @@ using System.Configuration;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<DataContext>(options => {
-    options.UseSqlite("DataSource=teste.db");
+    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
 builder.Services.AddDistributedMemoryCache();
@@ -62,10 +62,5 @@ app.UseRequestLocalization("pt-BR");
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Autenticacao}/{action=Login}/{id?}");
-
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}");
-
 
 app.Run();
