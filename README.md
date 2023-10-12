@@ -1,6 +1,6 @@
-#MyFinances v1
+# MyFinances v1
 
-##Built in .NET C# for those seeking to take control of their daily expenses and earnings
+## Built in .NET C# for those seeking to take control of their daily expenses and earnings
 Introducing MyFinances v1, a comprehensive financial management dashboard created in .NET 6 monolithic architecture. This tool is designed to assist you in tracking your expenses, income, financial goals, and debts, empowering you to stay informed about your daily financial activities.
 
 ##With MyFinances v1, you can effortlessly manage your daily financial matters, ensuring that you are always in the know about your monetary flow. Whether it's keeping tabs on expenses, monitoring income, or setting and achieving financial goals, this application has you covered.
