@@ -5,6 +5,10 @@ Introducing MyFinances v1, a comprehensive financial management dashboard create
 
 ## With MyFinances v1, you can effortlessly manage your daily financial matters, ensuring that you are always in the know about your monetary flow. Whether it's keeping tabs on expenses, monitoring income, or setting and achieving financial goals, this application has you covered.
 
+## :bulb: Live Demo
+
+- Finances = [here](<https://myfinances.portfolioluan.shop/>).
+  
 - Key Features:
 
 - Expense Tracking: Easily record and categorize your daily expenditures to gain insights into your spending habits.
